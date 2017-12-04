@@ -1,34 +1,32 @@
 
 
-CFLAGS=-g -Wall
-LDFLAGS:=-lpthread
+CFLAGS:=-g -Wall
+LDFLAGS:=
 CC:=gcc
 CPP:=g++
 
+PROJ_DIR:=$(shell pwd)
 
-targets:= 1 2 3 4 tags
+export CFLAGS LDFLAGS CC CPP PROJ_DIR
 
-all: $(targets) 
 
-1: 1.o work.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+subdirs:= utils io
 
-2: 2.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+all:  subdir tags
 
-3: 3.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-4: 4.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-*.o: *.c
-	$(CC) $(CFLAGS) -c $< -o $@
+.PHONY:subdir
+subdir:
+	@for dir in $(subdirs); do \
+		$(MAKE) -C $$dir; \
+	done
 
 tags: force
-	-ctags *.c
+	-ctags -R ./*
 force:;
 
-
+.PHONY:clean
 clean:
-	-rm *.o $(targets)
+	@for dir in $(subdirs); do \
+		$(MAKE) -C $$dir $@; \
+	done
+	-rm tags
