@@ -10,7 +10,7 @@ PROJ_DIR:=$(shell pwd)
 export CFLAGS LDFLAGS CC CPP PROJ_DIR
 
 
-subdirs:= utils io
+subdirs:= libwork io
 
 all:  subdir tags
 

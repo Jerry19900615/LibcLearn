@@ -5,16 +5,16 @@ CFLAGS ?= -g -Wall
 LDFLAGS ?= -lpthread
 CFLAGS += -L$(PROJ_DIR)/utils -I$(PROJ_DIR)/utils
 
-objects := work.o
+objects := libwork.o
 
 all: $(objects)
-	@ar -r libutils.a $(objects)
+	@ar -r libwork.a $(objects)
 	
 $(objects):%.o:%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 .PHONY:clean
 clean:
-	-rm *.o libutils.a
+	-rm *.o libwork.a
 
 

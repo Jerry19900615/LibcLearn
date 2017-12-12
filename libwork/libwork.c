@@ -1,7 +1,7 @@
 
 #define _GNU_SOURCE
 
-#include "work.h"
+#include "libwork.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
