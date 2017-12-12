@@ -9,9 +9,8 @@ extern "C" {
 #error "PLS use gcc"
 #endif
 
-typedef void(*work_func)(void*);
 
-int work_run(int cpu, work_func func, void *param, int main_thread);
+int work_run(int cpu, void(*func)(void*), void *param, int main_thread);
 
 #ifdef __cplusplus
 }

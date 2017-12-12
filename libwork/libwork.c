@@ -10,7 +10,7 @@
 
 typedef struct {
 	int cpu;
-	work_func func;
+	void(*func)(void*);
 	void *param;
 }work_param_t;
 
@@ -68,7 +68,7 @@ static void *__work_run_proc(void *param){
 	return NULL;
 }
 
-int work_run(int cpu, work_func func, void *param, int main_thread){
+int work_run(int cpu, void(*func)(void*), void *param, int main_thread){
 	work_param_t *p = (work_param_t*)malloc(sizeof(work_param_t));
 	if(!p){
 		fprintf(stderr, "work run error\n");
