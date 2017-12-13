@@ -10,7 +10,9 @@ extern "C" {
 #endif
 
 
-int work_run(int cpu, void(*func)(void*), void *param, int main_thread);
+int work_run(void(*func)(void*), void *param, int is_main_thread);
+
+int work_run_affinity(int cpu, void(*func)(void*), void *param, int is_main_thread);
 
 #ifdef __cplusplus
 }

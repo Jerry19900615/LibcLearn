@@ -8,11 +8,13 @@
 #include <pthread.h>
 #include <sched.h>
 
+
 typedef struct {
 	int cpu;
 	void(*func)(void*);
 	void *param;
 }work_param_t;
+
 
 static void *__work_run_thread(void *param){
 	work_param_t *p = (work_param_t*)param;
@@ -68,7 +70,7 @@ static void *__work_run_proc(void *param){
 	return NULL;
 }
 
-int work_run(int cpu, void(*func)(void*), void *param, int main_thread){
+int work_run_affinity(int cpu, void(*func)(void*), void *param, int is_main_thread){
 	work_param_t *p = (work_param_t*)malloc(sizeof(work_param_t));
 	if(!p){
 		fprintf(stderr, "work run error\n");
@@ -78,7 +80,7 @@ int work_run(int cpu, void(*func)(void*), void *param, int main_thread){
 	p->func = func;
 	p->param = param;
 
-	if(main_thread){
+	if(is_main_thread){
 		__work_run_proc(p);
 	}
 	else {
@@ -95,3 +97,9 @@ int work_run(int cpu, void(*func)(void*), void *param, int main_thread){
 	}
 	return 0;
 }
+
+
+int work_run(void(*func)(void*), void *param, int is_main_thread){
+	return work_run_affinity(-1, func, param, is_main_thread);
+}
+
